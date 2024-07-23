@@ -1,0 +1,76 @@
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 31px 24px;
+  gap: 16px;
+}
+
+.headerContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.headerTitle {
+  color: white;
+  font-size: 26px;
+  letter-spacing: 0px;
+  font-weight: bold;
+}
+
+.themeContainer {
+  display: flex;
+  gap: 16px;
+  flex-direction: row;
+  align-items: center;
+}
+
+.themeText {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  letter-spacing: 2.5px
+}
+
+.searchContainer {
+  padding-left: 16px;
+  padding-right: 7px;
+  display: flex;
+  background-color: var(--gray-dark-mode);
+  height: 60px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.searchIcon {
+  min-width: 20px;
+}
+
+.searchInput {
+  outline: none;
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+  border: none;
+  font-size: 13px;
+  margin-left: 9px;
+  color: white;
+  font-family: 'Space Mono';
+  text-align: left;
+}
+
+.searchInput::placeholder {
+  color: white;
+}
+
+.searchButton {
+  background-color: var(--blue);
+  border: none;
+  font-size: 14px;
+  color: white;
+  height: 46px;
+  min-width: 84px;
+  border-radius: 8px;
+}
