@@ -8,7 +8,7 @@ interface Theme {
   "body-title-color": string
 }
 
-export const darkTheme = {
+export const darkTheme: Theme = {
     "background-color": "#141D2F",
     "container-color": "#1E2A47",
     "title-color": "white",
@@ -18,7 +18,7 @@ export const darkTheme = {
     "body-title-color": "white"
 }
 
-export const lightTheme = {
+export const lightTheme: Theme = {
     "background-color": "#F6F8FF",
     "container-color": "#FEFEFE",
     "title-color": "#222731",
