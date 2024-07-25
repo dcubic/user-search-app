@@ -410,6 +410,10 @@
     align-items: center;
   }
 
+  .descriptionParagraph {
+    font-size: 15px;
+  }
+
   .portraitContainer {
     grid-row: 1 / span 2;
     grid-column: 1;

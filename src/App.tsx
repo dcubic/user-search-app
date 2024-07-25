@@ -246,7 +246,12 @@ function App() {
                 />
               </div>
               {hasBlog() ? (
-                <a className={styles.linkText} href={userState.blog && userState.blog }>{userState.blog}</a>
+                <a
+                  className={styles.linkText}
+                  href={userState.blog && userState.blog}
+                >
+                  {userState.blog}
+                </a>
               ) : (
                 <p className={`${styles.notLinkText} ${styles.inactive}`}>
                   Not Available
