@@ -221,7 +221,7 @@ function App() {
             </div>
           </div>
           <div className={styles.additionalInfoContainer}>
-            <div className={styles.visualInfoContainer}>
+            <div className={`${styles.visualInfoContainer} ${styles.location}`}>
               <div className={styles.visualIconContainer}>
                 <LocationIcon
                   className={`${styles.infoIcon} ${
@@ -237,7 +237,7 @@ function App() {
                 {hasLocation() ? userState.location : "Not Available"}
               </p>
             </div>
-            <div className={styles.visualInfoContainer}>
+            <div className={`${styles.visualInfoContainer} ${styles.blog}`}>
               <div className={styles.visualIconContainer}>
                 <UrlIcon
                   className={`${styles.infoIcon} ${
@@ -253,7 +253,7 @@ function App() {
                 </p>
               )}
             </div>
-            <div className={styles.visualInfoContainer}>
+            <div className={`${styles.visualInfoContainer} ${styles.twitter}`}>
               <div className={styles.visualIconContainer}>
                 <TwitterIcon
                   className={`${styles.infoIcon} ${
@@ -271,7 +271,7 @@ function App() {
                 </p>
               )}
             </div>
-            <div className={styles.visualInfoContainer}>
+            <div className={`${styles.visualInfoContainer} ${styles.company}`}>
               <div className={styles.visualIconContainer}>
                 <CompanyIcon
                   className={`${styles.infoIcon} ${
