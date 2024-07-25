@@ -13,7 +13,7 @@
 }
 
 .headerTitle {
-  color: white;
+  color: var(--title-color);
   font-size: 26px;
   letter-spacing: 0px;
   font-weight: bold;
@@ -31,30 +31,74 @@
 }
 
 .themeContainer:hover .themeText {
-  color: var(--hover-mode-toggle-dark-mode);
+  color: var(--toggle-hover-color);
+}
+
+.modeIcon g {
+  fill: var(--theme-toggle-color);
 }
 
 .themeContainer:hover .modeIcon g {
-  color: var(--hover-mode-toggle-dark-mode);
-  fill: var(--hover-mode-toggle-dark-mode)
+  color: var(--toggle-hover-color);
+  fill: var(--toggle-hover-color);
 }
 
 .themeText {
   font-size: 16px;
   font-weight: bold;
-  color: white;
-  letter-spacing: 2.5px
+  color: var(--theme-toggle-color);
+  letter-spacing: 2.5px;
 }
 
 .searchContainer {
+  position: relative;
   padding-left: 16px;
   padding-right: 7px;
   display: flex;
-  background-color: var(--gray-dark-mode);
+  background-color: var(--container-color);
   height: 60px;
   justify-content: space-between;
   align-items: center;
   border-radius: 10px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.errorText {
+  position: absolute;
+  font-size: 11px;
+  color: var(--error-red);
+  right: 0;
+
+  top: -24px;
+  right: 8px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.fadeOut {
+  animation: fadeOut 1s ease-in-out 1s forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.inputErrorText {
+  position: absolute;
+  font-family: "Outfit";
+  font-weight: 300;
+  font-size: 13px;
+  color: var(--orange-red);
+  left: 0;
+  top: -26px;
 }
 
 .searchIcon {
@@ -69,14 +113,14 @@
   border: none;
   font-size: 13px;
   margin-left: 9px;
-  color: white;
-  font-family: 'Space Mono';
+  color: var(--theme-toggle-color);
+  font-family: "Space Mono";
   text-align: left;
   caret-color: var(--blue);
 }
 
 .searchInput::placeholder {
-  color: white;
+  color: var(--theme-toggle-color);
 }
 
 .searchButton {
@@ -99,7 +143,7 @@
 }
 
 .bodyContainer {
-  background-color: var(--gray-dark-mode);
+  background-color: var(--container-color);
   padding: 32px 24px 48px 24px;
   display: grid;
   row-gap: 33px;
@@ -107,6 +151,7 @@
   grid-template-rows: repeat(2, auto);
   grid-template-columns: auto 1fr;
   border-radius: 10px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 .portraitContainer {
@@ -125,6 +170,7 @@
   flex-direction: column;
   grid-row: 1;
   grid-column: 2;
+  gap: 6px;
 }
 
 .nameContainer {
@@ -134,11 +180,15 @@
 
 .nameText {
   font-size: 16px;
-  color: white;
+  color: var(--body-title-color);
 }
 
 .tagText {
   color: var(--blue);
+}
+
+.joinDateText {
+  color: var(--internal-text-color);
 }
 
 .informationContainer {
@@ -150,6 +200,7 @@
 }
 
 .descriptionParagraph {
+  color: var(--theme-toggle-color);
   line-height: 25px;
 }
 
@@ -157,8 +208,9 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   padding: 19px 15px;
-  background-color: var(--black-dark-mode);
+  background-color: var(--background-color);
   border-radius: 10px;
+  filter: brightness(0.95);
 }
 
 .infoContainer {
@@ -169,11 +221,13 @@
 }
 
 .classificationText {
+  color: var(--theme-toggle-color);
   text-align: center;
   font-size: 11px;
 }
 
 .numericalValue {
+  color: var(--body-title-color);
   font-size: 16px;
   font-weight: bold;
 }
@@ -205,20 +259,25 @@
 }
 
 .activeIcon path {
-  fill: white;
+  fill: var(--theme-toggle-color);
 }
 
 .inactiveIcon path {
-  fill: white;
+  fill: var(--theme-toggle-color);
   opacity: 0.5;
 }
 
 .infoIcon path {
-  fill: white;
+  fill: var(--theme-toggle-color);
 }
 
 .linkText {
   text-decoration: none;
+  color: var(--theme-toggle-color);
+}
+
+.notLinkText {
+  color: var(--theme-toggle-color);
 }
 
 .inactive {

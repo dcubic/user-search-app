@@ -5,8 +5,9 @@ import LocationIcon from "../src/assets/icon-location.svg?react";
 import UrlIcon from "../src/assets/icon-website.svg?react";
 import TwitterIcon from "../src/assets/icon-twitter.svg?react";
 import CompanyIcon from "../src/assets/icon-company.svg?react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fetchUserInfo } from "./apis/githubApi";
+import { darkTheme, lightTheme } from "./apis/theme";
 
 interface UserState {
   profilePicUrl: string;
@@ -14,7 +15,7 @@ interface UserState {
   name: string | null;
   company: string | null;
   location: string | null;
-  blog: string | null;
+  blog: string;
   twitterUsername: string | null;
   followerCount: number;
   followingCount: number;
@@ -37,30 +38,71 @@ const DEFAULT_STATE: UserState = {
   repoCount: 8,
   creationDateString: "25 Jan 2011",
 };
+const FADEOUT_DELAY = 1000;
 
 function App() {
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [userState, setUserState] = useState(DEFAULT_STATE);
   const [searchString, setSearchString] = useState("");
+  const [noUserError, setNoUserError] = useState(false);
+  const showErrorTimeoutRef = useRef<number | undefined>(undefined);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchString(event.target.value);
   };
 
+  console.log("isDarkMode: ", isDarkMode);
+
   const handleKeypress = async (
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
-    console.log(event);
     if (event.key === "Enter") {
       await getUserInfo();
     }
   };
 
+  function toggleTheme() {
+    setIsDarkMode((modeCurrent) => !modeCurrent);
+  }
+
+  useEffect(() => {
+    if (noUserError) {
+      showErrorTimeoutRef.current = setTimeout(() => {
+        setNoUserError(false);
+      }, 2 * FADEOUT_DELAY);
+
+      return () => {
+        clearTimeout(showErrorTimeoutRef.current);
+      };
+    }
+  }, [noUserError]);
+
+  useEffect(() => {
+    const theme = isDarkMode ? darkTheme : lightTheme;
+    console.log("");
+    Object.entries(theme).forEach(([variableName, value]) => {
+      document.documentElement.style.setProperty(`--${variableName}`, value);
+    });
+  }, [isDarkMode]);
+
+  const clearErrorTimeout = () => {
+    if (showErrorTimeoutRef) {
+      clearTimeout(showErrorTimeoutRef.current);
+    }
+  };
+
   const getUserInfo = async () => {
-    if (searchString === "") return;
+    clearErrorTimeout();
+    setNoUserError(false);
+
+    if (searchString === "") {
+      setNoUserError(true);
+      return;
+    }
 
     const getUserResponse = await fetchUserInfo(searchString);
     if (!getUserResponse.success) {
-      // TODO: Handle error case
+      setNoUserError(true);
     } else {
       const date = new Date(getUserResponse.userInfo!.created_at);
       const formattedDate = date.toLocaleDateString("en-GB", {
@@ -83,6 +125,7 @@ function App() {
         repoCount: getUserResponse.userInfo!.public_repos,
         creationDateString: formattedDate,
       });
+      setNoUserError(false);
     }
   };
 
@@ -97,7 +140,6 @@ function App() {
     userState.twitterUsername !== null && userState.twitterUsername !== "";
 
   const twitterUrl = () => {
-    console.log("prove to me that this was called");
     const trimmedUsername =
       userState.twitterUsername![0] === "@"
         ? userState.twitterUsername!.substring(1)
@@ -109,12 +151,19 @@ function App() {
 
   const hasBlog = () => userState.blog !== "";
 
+  const noResultsText = () => {
+    if (noUserError) {
+      return "No results";
+    }
+    return "";
+  };
+
   return (
     <div className={styles.appContainer}>
       <div className={styles.headerContainer}>
         <h1 className={styles.headerTitle}>devfinder</h1>
-        <div className={styles.themeContainer}>
-          <p className={styles.themeText}>LIGHT</p>
+        <div className={styles.themeContainer} onClick={toggleTheme}>
+          <p className={styles.themeText}>{isDarkMode ? "LIGHT" : "DARK"}</p>
           <SunIcon className={styles.modeIcon} />
         </div>
       </div>
@@ -130,6 +179,11 @@ function App() {
         <button className={styles.searchButton} onClick={getUserInfo}>
           Search
         </button>
+        {noUserError && (
+          <p className={`${styles.errorText} ${styles.fadeOut}`}>
+            {noResultsText()}
+          </p>
+        )}
       </div>
       <div className={styles.bodyContainer}>
         <div className={styles.portraitContainer}>
@@ -142,7 +196,9 @@ function App() {
             </h2>
             <p className={styles.tagText}>{`@${userState.username}`}</p>
           </div>
-          <p>Joined {userState.creationDateString}</p>
+          <p className={styles.joinDateText}>
+            Joined {userState.creationDateString}
+          </p>
         </div>
         <div className={styles.informationContainer}>
           <p className={styles.descriptionParagraph}>
@@ -173,7 +229,11 @@ function App() {
                   }`}
                 />
               </div>
-              <p className={hasLocation() ? "" : styles.inactive}>
+              <p
+                className={`${styles.notLinkText} ${
+                  hasLocation() ? "" : styles.inactive
+                }`}
+              >
                 {hasLocation() ? userState.location : "Not Available"}
               </p>
             </div>
@@ -186,9 +246,11 @@ function App() {
                 />
               </div>
               {hasBlog() ? (
-                <a className={styles.linkText}>{userState.blog}</a>
+                <a className={styles.linkText} href={userState.blog && userState.blog }>{userState.blog}</a>
               ) : (
-                <p className={styles.inactive}>Not Available</p>
+                <p className={`${styles.notLinkText} ${styles.inactive}`}>
+                  Not Available
+                </p>
               )}
             </div>
             <div className={styles.visualInfoContainer}>
@@ -204,7 +266,9 @@ function App() {
                   {userState.twitterUsername}
                 </a>
               ) : (
-                <p className={styles.inactive}>Not Available</p>
+                <p className={`${styles.notLinkText} ${styles.inactive}`}>
+                  Not Available
+                </p>
               )}
             </div>
             <div className={styles.visualInfoContainer}>
@@ -220,7 +284,9 @@ function App() {
                   {userState.company}
                 </a>
               ) : (
-                <p className={styles.inactive}>Not Available</p>
+                <p className={`${styles.notLinkText} ${styles.inactive}`}>
+                  Not Available
+                </p>
               )}
             </div>
           </div>

@@ -3,9 +3,15 @@
 :root {
   --blue: hsl(212, 100%, 50%);
   --button-hover: #60ABFF;
-  --black-dark-mode: #141D2F;
-  --gray-dark-mode: hsl(222, 41%, 20%);
-  --hover-mode-toggle-dark-mode: #90A4D4
+  --error-red: #F74646;
+
+  --background-color: #141D2F; /* #F6F8FF */
+  --container-color: #1E2A47; /* #FEFEFE */
+  --title-color: white; /* #222731 */
+  --theme-toggle-color: white; /* #4B6A9B */
+  --toggle-hover-color: #90A4D4; /* #90A4D4 */
+  --internal-text-color: white; /* #697C9A */
+  --body-title-color: white; /* #2B3442 */
 }
 
 body, h1, h2, p {
@@ -19,7 +25,7 @@ h1, h2, p, button, a {
 body {
   width: 100%;
   height: 100%;
-  background-color: var(--black-dark-mode);
+  background-color: var(--background-color);
 }
 
 #root {
@@ -29,5 +35,4 @@ body {
 
 a, p {
   font-size: 13px;
-  color: white;
 }
